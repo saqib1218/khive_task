@@ -6,7 +6,11 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        primary: '#19ECB7',
+      },
       keyframes: {
+        
         dashMove: {
           to: { strokeDashoffset: "70" },
         },
