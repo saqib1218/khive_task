@@ -1,23 +1,11 @@
-import logo from './logo.svg';
-import './App.css';
+import { ReactComponent as Ellipse } from './asset/App/elipse2.svg';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="flex  min-h-screen bg-black">
+      <div className="w-4/5 border border-[#141519] rounded-2xl overflow-hidden">
+        <Ellipse className="w-full h-auto [&_*]:animate-dash [&_*]:[stroke-dasharray:2_14]" />
+      </div>
     </div>
   );
 }

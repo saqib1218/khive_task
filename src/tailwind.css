@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Optional base tweaks */
+html, body, #root {
+  height: 100%;
+}
+
+@layer base {
+  body {
+    /* App background color defined here instead of JSX */
+    background-color: #000000;
+    @apply text-gray-900;
+  }
+}
+/* Component styles removed per request: Tailwind utilities will be used in JSX. */
