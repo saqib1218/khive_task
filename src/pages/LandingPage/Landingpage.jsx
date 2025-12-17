@@ -3,7 +3,18 @@ import { ReactComponent as Ellipse } from '../../asset/App/elipse2.svg';
 import Header from '../../component/Header/Header';
 import centerImg from '../../asset/App/center.png';
 import linesImg from '../../asset/App/lines.png';
+import leftline from '../../asset/App/leftline3.png';
+import rightline from '../../asset/App/rightline.png';
+import leftbranch from '../../asset/App/leftbranch.png';
+import rightbranch from '../../asset/App/rightbranch.png';
+import l1 from '../../asset/App/l1.png';
+import l2 from '../../asset/App/l2.png';
+import l3 from '../../asset/App/l3.png';
+import l4 from '../../asset/App/l4.png';
+import l5 from '../../asset/App/l5.png';
+
 import About from '../About/About';
+import Card from '../../component/Card/Card';
 function Landingpage() {
   const scrollAreaRef = useRef(null);
   const contentRef = useRef(null);
@@ -135,12 +146,87 @@ function Landingpage() {
         {/* Scrollable About area between header and bottom */}
         <div
           ref={scrollAreaRef}
-          className="absolute h-fit inset-x-0 top-10 bottom-0 z-20"
+          className="absolute h-fit inset-x-0 top-10 bottom-0 z-20 overflow-hidden"
         >
-          <div ref={contentRef} style={{ transform: `translateY(-${virtOffset}px)`, willChange: 'transform' }}>
+          <div
+            ref={contentRef}
+            style={{
+              transform: `translateY(-${virtOffset}px)`,
+              willChange: 'transform',
+              // Hide the top 26px so content becomes invisible as it goes under the header divider
+              WebkitClipPath: 'inset(26px 0 0 0)',
+              clipPath: 'inset(26px 0 0 0)'
+            }}
+          >
             <About />
           </div>
         </div>
+
+        {/* Non-scrolling decorative circle, centered with slight margin below About */}
+        <div className="absolute left-1/2 -translate-x-1/2" style={{ top: 'calc(44% + 24px)' }}>
+          <div className="w-[306px] rounded-full h-[304.776px]  relative ">
+            {/* branches close to the circle (full length, no mask) */}
+            <img
+              src={leftbranch}
+              alt="left branch"
+              className="absolute h-[420.776px] w-[376px] pointer-events-none select-none"
+              style={{ right: 'calc(70% )', bottom: 'calc(6%)' }}
+            />
+            <img
+              src={rightbranch}
+              alt="right branch"
+              className="absolute h-[420.776px] w-[376px] pointer-events-none select-none"
+              style={{ left: 'calc(70% )', bottom: 'calc(10%)' }}
+            />
+            {/* eraser circle: hides only the branch area behind the circle while keeping the circle visually transparent */}
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[306px] h-[304.776px] rounded-full bg-[#1E1E24] z-[5] pointer-events-none" />
+            {/* circle */}
+            <div className="w-full h-full rounded-full bg-transparent border-[2px] z-10 shadow-[inset_0px_4px_60px_0px_rgba(255,255,255,0.28),_0px_4px_120px_70px_#010101]" />
+            {/* original lines further out with overlay icons stacked vertically along the left curved line */}
+            <div className="absolute left-[-260px] top-[30%] -translate-y-1/2 pointer-events-none select-none" style={{ position: 'absolute' }}>
+              {/* Left curved line */}
+              <img src={leftline} alt="left line" className="block" />
+              {/* Overlay icons positioned vertically (tweakable) */}
+              <div className="absolute left-[70px] top-[8%] -translate-x-1/2 -translate-y-1/2">
+                <img src={l1} alt="l1" className="w-full h-full" />
+              </div>
+              <div className="absolute left-[20px] top-[27%] -translate-x-1/2 -translate-y-1/2">
+                <img src={l2} alt="l2" className="w-full h-full" />
+              </div>
+              <div className="absolute left-[10px] top-[47%] -translate-x-1/2 -translate-y-1/2">
+                <img src={l3} alt="l3" className="w-full h-full" />
+              </div>
+              <div className="absolute left-[20px] top-[67%] -translate-x-1/2 -translate-y-1/2">
+                <img src={l4} alt="l4" className="w-full h-full" />
+              </div>
+              <div className="absolute right-[20px] top-[75%] ">
+                <img src={l5} alt="l5" className="w-full h-full" />
+              </div>
+            </div>
+            {/* Right curved line with overlay icons stacked vertically (mirroring left side) */}
+            <div className="absolute right-[-260px] top-[30%] -translate-y-1/2 pointer-events-none select-none" style={{ position: 'absolute' }}>
+              {/* Right curved line */}
+              <img src={rightline} alt="right line" className="block" />
+              {/* Overlay icons positioned vertically (tweakable) */}
+              <div className="absolute right-[30px] top-[8%] translate-x-1/2 -translate-y-1/2">
+              <Card rotation={-12} />
+              </div>
+              <div className="absolute right-[10px] top-[26%] translate-x-1/2 -translate-y-1/2">
+                <Card rotation={-12}/>
+              </div>
+              <div className="absolute right-[0px] top-[44%] translate-x-1/2 -translate-y-1/2">
+              <Card rotation={-12}/>
+              </div>
+              <div className="absolute right-[10px] top-[68%] translate-x-1/2 -translate-y-1/2">
+              <Card rotation={16} />
+              </div>
+              <div className="absolute left-[140px] top-[85%] -translate-x-1/2 -translate-y-1/2">
+              <Card rotation={22}/>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <Ellipse className="w-full h-auto [&_*]:animate-dash [&_*]:[stroke-dasharray:2_14]" />
         {/* Centered overlay images */}
         <img

@@ -19,7 +19,7 @@ function About() {
 
       {/* Let agents cut noise in */}
       <h1
-        className="text-white font-normal text-[64px] leading-[95%] tracking-[-1.2px] text-center"
+        className="text-white font-normal text-[54px] leading-[95%] tracking-[-1.2px] text-center"
         style={{ fontFamily: 'Suisse Intl, ui-sans-serif, system-ui, sans-serif' }}
       >
         Let agents cut noise in
@@ -33,7 +33,7 @@ function About() {
         </div>
 
         <span
-          className="text-white font-normal text-[64px] leading-[145%] tracking-[-1.2px] text-center"
+          className="text-white font-normal text-[54px] leading-[145%] tracking-[-1.2px] text-center"
           style={{ fontFamily: 'Suisse Intl, ui-sans-serif, system-ui, sans-serif' }}
         >
           Auto Trading!
