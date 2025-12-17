@@ -14,11 +14,15 @@ import l4 from '../../asset/App/l4.png';
 import l5 from '../../asset/App/l5.png';
 
 import About from '../About/About';
+import Auto from '../../component/Auto/Auto';
+import Filter from '../../component/Filter/Filter';
+import Strategy from '../../component/strategy/Strategy';
 import Card from '../../component/Card/Card';
 function Landingpage() {
   const scrollAreaRef = useRef(null);
   const contentRef = useRef(null);
   const [virtOffset, setVirtOffset] = useState(0); // virtual translate when no native scroll
+  const [selectedTab, setSelectedTab] = useState('Auto');
 
   // Manually handle wheel inside the scroll area and block page scroll
   useEffect(() => {
@@ -163,7 +167,7 @@ function Landingpage() {
         </div>
 
         {/* Non-scrolling decorative circle, centered with slight margin below About */}
-        <div className="absolute left-1/2 -translate-x-1/2" style={{ top: 'calc(44% + 24px)' }}>
+        <div className="absolute left-1/2 -translate-x-1/2" style={{ top: 'calc(40% + 24px)' }}>
           <div className="w-[306px] rounded-full h-[304.776px]  relative ">
             {/* branches close to the circle (full length, no mask) */}
             <img
@@ -182,6 +186,12 @@ function Landingpage() {
             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[306px] h-[304.776px] rounded-full bg-[#1E1E24] z-[5] pointer-events-none" />
             {/* circle */}
             <div className="w-full h-full rounded-full bg-transparent border-[2px] z-10 shadow-[inset_0px_4px_60px_0px_rgba(255,255,255,0.28),_0px_4px_120px_70px_#010101]" />
+            {/* inner content shown inside the circle based on selected tab (clipped to circle) */}
+            <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none rounded-full overflow-hidden">
+              {selectedTab === 'Auto' && <Auto />}
+              {selectedTab === 'Filter' && <Filter />}
+              {selectedTab === 'Strategy' && <Strategy />}
+            </div>
             {/* original lines further out with overlay icons stacked vertically along the left curved line */}
             <div className="absolute left-[-260px] top-[30%] -translate-y-1/2 pointer-events-none select-none" style={{ position: 'absolute' }}>
               {/* Left curved line */}
@@ -223,6 +233,38 @@ function Landingpage() {
               <div className="absolute left-[140px] top-[85%] -translate-x-1/2 -translate-y-1/2">
               <Card rotation={22}/>
               </div>
+            </div>
+          </div>
+          {/* Tabs below the circle */}
+          <div className="mt-4 flex items-center justify-center gap-4 select-none">
+            <button
+              type="button"
+              onClick={() => setSelectedTab('Filter')}
+              className={`${selectedTab === 'Filter' ? 'text-white' : 'text-gray-400'} text-2xl tracking-wide`}
+            >
+              Filter
+            </button>
+            <button
+              type="button"
+              onClick={() => setSelectedTab('Strategy')}
+              className={`${selectedTab === 'Strategy' ? 'text-white' : 'text-gray-400'} text-2xl tracking-wide`}
+            >
+              Strategy
+            </button>
+            <button
+              type="button"
+              onClick={() => setSelectedTab('Auto')}
+              className={`${selectedTab === 'Auto' ? 'text-white' : 'text-gray-400'} text-2xl tracking-wide`}
+            >
+              Auto
+            </button>
+          </div>
+          <div className="mt-6 flex justify-center">
+            <div className="relative w-[240px] h-[2px] bg-gray-600/60 rounded-full">
+              <div
+                className="absolute left-0 top-0 h-full bg-emerald-400 rounded-full transition-[width] duration-500 ease-out"
+                style={{ width: selectedTab === 'Filter' ? '33%' : selectedTab === 'Strategy' ? '66%' : '100%' }}
+              />
             </div>
           </div>
         </div>
