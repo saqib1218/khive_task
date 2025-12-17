@@ -5,7 +5,6 @@ export default function Strategy() {
   const [blurStage, setBlurStage] = useState(false);
   const [showRobot, setShowRobot] = useState(false);
   useEffect(() => {
-    // After the rows/cards animate, blur first, then reveal robot and hide background
     const t1 = setTimeout(() => setBlurStage(true), 1500);
     const t2 = setTimeout(() => setShowRobot(true), 2100);
     return () => {
@@ -15,7 +14,6 @@ export default function Strategy() {
   }, []);
   return (
     <div className="relative w-full h-full flex-col flex items-center justify-center">
-      {/* Local keyframes for open animation */}
       <style>{`
         @keyframes stratSlideUp { from { transform: translateY(0); opacity: 1; } to { transform: translateY(-50px); opacity: 1; } }
         @keyframes stratSlideDown { from { transform: translateY(0); opacity: 1; } to { transform: translateY(80px); opacity: 1; } }
@@ -73,14 +71,13 @@ export default function Strategy() {
           pointer-events: none;
         }
       `}</style>
-      {/* Background content; blur first, then hide entirely when robot is shown */}
+      
       <div
         className={`relative w-full h-full z-0 flex flex-col items-center justify-center transition-all duration-500 ${
           showRobot ? 'opacity-0 pointer-events-none' : blurStage ? 'blur-[3px] opacity-60' : 'opacity-100'
         }`}
       >
       <div className="relative w-full px-0 h-10 mb-0" style={{ animation: 'stratSlideUp 700ms ease-out forwards' }}>
-        {/* Tiny dotted primary line across the entire circle width */}
         <div
           className="w-full h-[2px]"
           style={{
@@ -89,7 +86,6 @@ export default function Strategy() {
           }}
         />
 
-        {/* Centered row badges on the dotted line (attached) */}
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-0">
           
           <span className="px-3 py-1 rounded-l-md border border-emerald-400  bg-emerald-300/30  text-white text-xs md:text-sm font-medium leading-none">
@@ -100,7 +96,7 @@ export default function Strategy() {
           </span>
         </div>
       </div>
-      {/* Second dotted line and badges below the first */}
+      
       <div className="relative w-full px-0 h-10" style={{ animation: 'stratSlideDown 700ms ease-out 50ms forwards' }}>
         <div
           className="w-full h-[2px]"
@@ -119,7 +115,7 @@ export default function Strategy() {
           </span>
         </div>
       </div>
-      {/* Right-side small cards sliding in (horizontal row, 3 visible + partial 4th) */}
+      
       <div className="relative w-full h-0">
         <div className="absolute right-2 top-[-30px] -translate-y-1/2 z-10 pointer-events-none">
           <div className="flex items-center gap-2 overflow-hidden" style={{ width: '190px', perspective: '700px', transformStyle: 'preserve-3d' }}>
@@ -132,11 +128,8 @@ export default function Strategy() {
                   transformOrigin: 'bottom center'
                 }}
               >
-                {/* top icon */}
                 <span className="w-2.5 h-2.5 rounded-full bg-gray-200/90 shadow-[0_0_6px_rgba(255,255,255,0.35)]" />
-                {/* middle value */}
                 <span className="text-white text-lg  leading-none">25</span>
-                {/* bottom slots */}
                 <span className="text-[10px] text-gray-300 leading-none">2 slots</span>
               </div>
             ))}
@@ -144,10 +137,10 @@ export default function Strategy() {
         </div>
       </div>
       </div>
-      {/* Foreground robot overlay */}
+      
       {showRobot && (
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center z-30">
-          {/* Button-like container */}
+          
           <div className="relative w-[30%] max-w-[320px] h-12 rounded-full bg-black/50 border-2 border-white/70 shadow-[0_0_30px_rgba(255,255,255,0.15)] overflow-hidden" style={{ animation: 'borderToPrimary 1200ms ease-in-out 200ms forwards' }}>
             <img
               src={robot}

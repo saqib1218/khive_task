@@ -21,7 +21,7 @@ import Card from '../../component/Card/Card';
 function Landingpage() {
   const scrollAreaRef = useRef(null);
   const contentRef = useRef(null);
-  const [virtOffset, setVirtOffset] = useState(0); // virtual translate when no native scroll
+  const [virtOffset, setVirtOffset] = useState(0);
   const [selectedTab, setSelectedTab] = useState('Auto');
 
   // Manually handle wheel inside the scroll area and block page scroll
@@ -29,23 +29,9 @@ function Landingpage() {
     const el = scrollAreaRef.current;
     if (!el) return;
 
-    const logState = (label, extra = {}) => {
-      const info = {
-        label,
-        scrollTop: el.scrollTop,
-        clientHeight: el.clientHeight,
-        scrollHeight: el.scrollHeight,
-        maxScroll: el.scrollHeight - el.clientHeight,
-        atTop: el.scrollTop <= 0,
-        atBottom: el.scrollTop >= el.scrollHeight - el.clientHeight,
-        ...extra,
-      };
-      // eslint-disable-next-line no-console
-      console.log('[AboutArea]', info);
-    };
+    const logState = () => {};
 
-    // Initial metrics
-    logState('mount');
+    logState();
 
     const onWheel = (e) => {
       const { deltaY } = e;
@@ -60,19 +46,16 @@ function Landingpage() {
         let next = prev + deltaY;
         if (next < 0) next = 0;
         if (next > maxScroll) next = maxScroll;
-        logState('wheel', { deltaY, prev, next, canScrollUp, canScrollDown });
+        logState();
         el.scrollTop = next;
       } else {
-        // No native overflow; simulate by translating content wrapper
-        // We want: scroll down (deltaY > 0) -> move content up (increase virtOffset)
-        //          scroll up (deltaY < 0)  -> move content down (decrease virtOffset)
         const viewport = el.clientHeight;
         const maxVirt = Math.max(0, viewport);
         setVirtOffset((prevVirt) => {
           let nextVirt = prevVirt + (deltaY > 0 ? Math.abs(deltaY) : -Math.abs(deltaY));
           if (nextVirt < 0) nextVirt = 0;
           if (nextVirt > maxVirt) nextVirt = maxVirt;
-          logState('wheel-virtual', { deltaY, prevVirt, nextVirt, viewport });
+          logState();
           return nextVirt;
         });
       }
@@ -82,7 +65,6 @@ function Landingpage() {
       e.preventDefault();
     };
 
-    // Touch support
     let touchStartY = 0;
     const onTouchStart = (e) => {
       if (e.touches && e.touches.length > 0) {
@@ -92,7 +74,7 @@ function Landingpage() {
     const onTouchMove = (e) => {
       if (!(e.touches && e.touches.length > 0)) return;
       const currentY = e.touches[0].clientY;
-      const deltaY = touchStartY - currentY; // positive means scroll down
+      const deltaY = touchStartY - currentY;
 
       const prev = el.scrollTop;
       const maxScroll = el.scrollHeight - el.clientHeight;
@@ -102,30 +84,26 @@ function Landingpage() {
         let next = prev + deltaY;
         if (next < 0) next = 0;
         if (next > maxScroll) next = maxScroll;
-        logState('touchmove', { deltaY, prev, next, canScrollUp, canScrollDown });
+        logState();
         el.scrollTop = next;
       } else {
         const viewport = el.clientHeight;
         const maxVirt = Math.max(0, viewport);
         setVirtOffset((prevVirt) => {
-          // For touch: deltaY = touchStartY - currentY (positive means scroll down)
           let nextVirt = prevVirt + (deltaY > 0 ? Math.abs(deltaY) : -Math.abs(deltaY));
           if (nextVirt < 0) nextVirt = 0;
           if (nextVirt > maxVirt) nextVirt = maxVirt;
-          logState('touchmove-virtual', { deltaY, prevVirt, nextVirt, viewport });
+          logState();
           return nextVirt;
         });
       }
 
       e.stopPropagation();
       e.preventDefault();
-      // update baseline for smooth continuous scroll
       touchStartY = currentY;
     };
 
-    const onScroll = () => {
-      logState('scroll');
-    };
+    const onScroll = () => {};
 
     el.addEventListener('wheel', onWheel, { passive: false });
     el.addEventListener('touchstart', onTouchStart, { passive: false });
@@ -143,11 +121,9 @@ function Landingpage() {
   return (
     <div className="flex  min-h-screen bg-transparent">
       <div className="relative w-4/5 min-h-screen border border-[#141519] rounded-2xl overflow-hidden">
-        {/* Header fixed to the top of the inner container */}
         <div className="absolute inset-x-0 top-0 z-40 bg-transparent">
           <Header />
         </div>
-        {/* Scrollable About area between header and bottom */}
         <div
           ref={scrollAreaRef}
           className="absolute h-fit inset-x-0 top-10 bottom-0 z-20 overflow-hidden"
@@ -157,7 +133,6 @@ function Landingpage() {
             style={{
               transform: `translateY(-${virtOffset}px)`,
               willChange: 'transform',
-              // Hide the top 26px so content becomes invisible as it goes under the header divider
               WebkitClipPath: 'inset(26px 0 0 0)',
               clipPath: 'inset(26px 0 0 0)'
             }}
@@ -166,10 +141,8 @@ function Landingpage() {
           </div>
         </div>
 
-        {/* Non-scrolling decorative circle, centered with slight margin below About */}
         <div className="absolute left-1/2 -translate-x-1/2" style={{ top: 'calc(40% + 24px)' }}>
           <div className="w-[306px] rounded-full h-[304.776px]  relative ">
-            {/* branches close to the circle (full length, no mask) */}
             <img
               src={leftbranch}
               alt="left branch"
@@ -182,21 +155,15 @@ function Landingpage() {
               className="absolute h-[420.776px] w-[376px] pointer-events-none select-none"
               style={{ left: 'calc(70% )', bottom: 'calc(10%)' }}
             />
-            {/* eraser circle: hides only the branch area behind the circle while keeping the circle visually transparent */}
             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[306px] h-[304.776px] rounded-full bg-[#1E1E24] z-[5] pointer-events-none" />
-            {/* circle */}
             <div className="w-full h-full rounded-full bg-transparent border-[2px] z-10 shadow-[inset_0px_4px_60px_0px_rgba(255,255,255,0.28),_0px_4px_120px_70px_#010101]" />
-            {/* inner content shown inside the circle based on selected tab (clipped to circle) */}
             <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none rounded-full overflow-hidden">
               {selectedTab === 'Auto' && <Auto />}
               {selectedTab === 'Filter' && <Filter />}
               {selectedTab === 'Strategy' && <Strategy />}
             </div>
-            {/* original lines further out with overlay icons stacked vertically along the left curved line */}
             <div className="absolute left-[-260px] top-[30%] -translate-y-1/2 pointer-events-none select-none" style={{ position: 'absolute' }}>
-              {/* Left curved line */}
               <img src={leftline} alt="left line" className="block" />
-              {/* Overlay icons positioned vertically (tweakable) */}
               <div className="absolute left-[70px] top-[8%] -translate-x-1/2 -translate-y-1/2">
                 <img src={l1} alt="l1" className="w-full h-full" />
               </div>
@@ -213,11 +180,8 @@ function Landingpage() {
                 <img src={l5} alt="l5" className="w-full h-full" />
               </div>
             </div>
-            {/* Right curved line with overlay icons stacked vertically (mirroring left side) */}
             <div className="absolute right-[-260px] top-[30%] -translate-y-1/2 pointer-events-none select-none" style={{ position: 'absolute' }}>
-              {/* Right curved line */}
               <img src={rightline} alt="right line" className="block" />
-              {/* Overlay icons positioned vertically (tweakable) */}
               <div className="absolute right-[30px] top-[8%] translate-x-1/2 -translate-y-1/2">
               <Card rotation={-12} />
               </div>
@@ -235,7 +199,6 @@ function Landingpage() {
               </div>
             </div>
           </div>
-          {/* Tabs below the circle */}
           <div className="mt-4 flex items-center justify-center gap-4 select-none">
             <button
               type="button"
@@ -270,7 +233,6 @@ function Landingpage() {
         </div>
 
         <Ellipse className="w-full h-auto [&_*]:animate-dash [&_*]:[stroke-dasharray:2_14]" />
-        {/* Centered overlay images */}
         <img
           src={linesImg}
           alt="lines"

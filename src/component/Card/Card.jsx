@@ -16,10 +16,8 @@ function Card({ rotation = 0 }) {
       `}
       style={{ transform: `rotate(${rotation}deg)` }}
       >
-        {/* Header */}
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-2">
-            {/* Green tick with primary color border and transparent bg */}
             <span
               className="
                 flex h-4 w-4 items-center justify-center 
@@ -34,22 +32,18 @@ function Card({ rotation = 0 }) {
             </span>
             <span className="text-[8px] text-white">Buy complete</span>
           </div>
-          {/* Close icon */}
           <span className="text-gray-500 text-sm">✕</span>
         </div>
 
-        {/* Transaction */}
         <div className='flex justify-between'>
           <div className="space-y-1">
             <p className="text-[8px] text-gray-500">Transaction</p>
             <p className="text-[8px] text-white font-medium">298.4M</p>
           </div>
-          {/* Bought */}
           <div className="space-y-1">
             <p className="text-[8px] text-gray-500">Bought</p>
             <p className="text-[8px] text-white font-medium">298.4M</p>
           </div>
-          {/* Spent */}
           <div className="space-y-1">
             <p className="text-[8px] text-gray-500">Spent</p>
             <p className="text-[8px] text-white font-medium">7 WSOL</p>

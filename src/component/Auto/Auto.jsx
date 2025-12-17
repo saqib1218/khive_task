@@ -7,12 +7,12 @@ import s2 from '../../asset/auto/s2.png';
 import s3 from '../../asset/auto/s3.png';
 
 export default function Auto() {
-  // Duplicate sequence to reinforce seamless loop
+
   const frames = useMemo(() => [chart1, chart2, chart3, chart1, chart2, chart3], []);
 
   return (
     <div className="w-full h-full flex items-center justify-center">
-      {/* keyframes: seamless infinite slide (no scale to keep edges aligned) */}
+
       <style>{`
         @keyframes runTrackInfinite {
           0%   { transform: translateX(0%); }
@@ -35,7 +35,6 @@ export default function Auto() {
         }
       `}</style>
       <div className="relative w-[92%] h-[92%] overflow-hidden">
-        {/* Moving track: 600% width so six frames (1,2,3,1,2,3) sit side by side; slide by 50% (3 frames) and loop infinitely */}
         <div
           className="absolute inset-0 flex w-[600%] h-full will-change-transform"
           style={{ animation: 'runTrackInfinite 42000ms linear infinite' }}
@@ -48,7 +47,6 @@ export default function Auto() {
                 className="absolute inset-0 w-full h-full object-contain"
                 draggable={false}
               />
-              {/* markers for each chart */}
               <img src={s1} alt="marker start" className="pointer-events-none select-none absolute z-10 top-1/2 left-[8%] w-5 h-5 opacity-80" style={{ transform: 'translate(-50%, -50%)' }} />
               <img src={s2} alt="marker middle" className="pointer-events-none select-none absolute z-10 top-1/2 left-1/2 w-5 h-5 opacity-80" style={{ transform: 'translate(-50%, -50%)' }} />
               <img src={s3} alt="marker end" className="pointer-events-none select-none absolute z-10 top-1/2 right-[8%] w-5 h-5 opacity-80" style={{ transform: 'translate(50%, -50%)' }} />
